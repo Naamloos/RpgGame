@@ -17,42 +17,47 @@ namespace RpgGame.Engine
         int _width;
         int _height;
         bool _finalized = false;
+        SpriteBatch _spritebatch;
+        DateTimeOffset _previous;
 
-        GameTime _previous;
-
-        public Animation(int width, int height, TimeSpan duration)
+        public Animation(int width, int height, TimeSpan duration, SpriteBatch spritebatch)
         {
             this._width = width;
             this._height = height;
             this._frames = new List<Sprite>();
             this._duration = duration;
             this._timer = new TimeSpan(0);
+            this._spritebatch = spritebatch;
+            this._previous = DateTimeOffset.Now;
         }
 
         public void Draw(int x, int y)
         {
-            var frameduration = (float)this._duration.Milliseconds / this._frames.Count;
+            var frameduration = (float)this._duration.TotalMilliseconds / this._frames.Count;
             var frameid = 0;
 
             for(int i = 0; i < _frames.Count; i++)
             {
-                if (_timer.Milliseconds > (frameduration * i))
+                if (_timer.TotalMilliseconds > (frameduration * i))
                     frameid = i;
             }
+            Console.WriteLine($"{_timer.TotalMilliseconds} : {frameduration}");
             _frames[frameid].Draw(x, y);
         }
 
-        public void Update(GameTime gametime)
+        public void Update()
         {
-            this._timer = gametime.TotalGameTime.Subtract(this._previous.TotalGameTime);
+            this._timer = DateTimeOffset.Now.Subtract(this._previous);
             if (this._timer > this._duration)
-                this._previous = gametime;
+            {
+                this._previous = DateTimeOffset.Now;
+            }
         }
 
         public void AddFrame(Texture2D texture)
         {
             if (!this._finalized)
-                this._frames.Add(new Sprite(texture, this._width, this._height));
+                this._frames.Add(new Sprite(texture, this._width, this._height, this._spritebatch));
             else
                 throw new AnimationFinalizedException("This animation has already been finalized. You can not modify it.");
         }
