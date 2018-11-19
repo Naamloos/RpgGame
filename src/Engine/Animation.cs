@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace RpgGame.Engine
 {
-    public class Animation
+    public class Animation : IDrawable
     {
         List<Sprite> _frames;
         TimeSpan _duration;
@@ -17,18 +17,20 @@ namespace RpgGame.Engine
         int _width;
         int _height;
         bool _finalized = false;
-        SpriteBatch _spritebatch;
+        Drawer _drawer;
         DateTimeOffset _previous;
+        DrawLayer _layer;
 
-        public Animation(int width, int height, TimeSpan duration, SpriteBatch spritebatch)
+        public Animation(int width, int height, TimeSpan duration, Drawer drawer, DrawLayer layer)
         {
             this._width = width;
             this._height = height;
             this._frames = new List<Sprite>();
             this._duration = duration;
             this._timer = new TimeSpan(0);
-            this._spritebatch = spritebatch;
+            this._drawer = drawer;
             this._previous = DateTimeOffset.Now;
+            this._layer = layer;
         }
 
         public void Draw(int x, int y)
@@ -41,7 +43,6 @@ namespace RpgGame.Engine
                 if (_timer.TotalMilliseconds > (frameduration * i))
                     frameid = i;
             }
-            Console.WriteLine($"{_timer.TotalMilliseconds} : {frameduration}");
             _frames[frameid].Draw(x, y);
         }
 
@@ -57,7 +58,7 @@ namespace RpgGame.Engine
         public void AddFrame(Texture2D texture)
         {
             if (!this._finalized)
-                this._frames.Add(new Sprite(texture, this._width, this._height, this._spritebatch));
+                this._frames.Add(new Sprite(texture, this._width, this._height, this._drawer, this._layer));
             else
                 throw new AnimationFinalizedException("This animation has already been finalized. You can not modify it.");
         }
@@ -73,6 +74,11 @@ namespace RpgGame.Engine
         public void FinalizeAnimation()
         {
             this._finalized = true;
+        }
+
+        public DrawLayer GetDrawLayer()
+        {
+            return this._layer;
         }
     }
 }

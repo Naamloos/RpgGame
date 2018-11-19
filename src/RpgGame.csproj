@@ -46,8 +46,16 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Engine\Animation.cs" />
+    <Compile Include="Engine\Drawer.cs" />
+    <Compile Include="Engine\DrawLayer.cs" />
+    <Compile Include="Engine\IDrawable.cs" />
+    <Compile Include="Engine\IGameScreen.cs" />
     <Compile Include="Engine\Sprite.cs" />
     <Compile Include="Exceptions\AnimationFinalizedException.cs" />
+    <Compile Include="GameData\MapManager.cs" />
+    <Compile Include="GameData\Screens\Overworld.cs" />
+    <Compile Include="Modding\Mod.cs" />
+    <Compile Include="Modding\ModManager.cs" />
     <Compile Include="RpgGame.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -110,6 +118,7 @@
     </None>
     <None Include="app.manifest" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Content.Builder.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

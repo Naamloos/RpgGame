@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using RpgGame.Engine;
+using RpgGame.Modding;
 using System;
 
 namespace RpgGame
@@ -20,12 +21,15 @@ namespace RpgGame
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        ModManager mods;
         Animation testanim;
+        Drawer drawer;
 
         public RpgGame()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+            mods = new ModManager();
         }
 
         protected override void Initialize()
@@ -36,10 +40,16 @@ namespace RpgGame
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            drawer = new Drawer(spriteBatch);
+            mods.LoadModAssemblies();
+            testanim = new Animation(74, 86, TimeSpan.FromMilliseconds(1000), drawer, DrawLayer.Entities);
 
-            testanim = new Animation(100, 100, TimeSpan.FromSeconds(1), spriteBatch);
-            testanim.AddFrame(Content.Load<Texture2D>("testanim1"));
-            testanim.AddFrame(Content.Load<Texture2D>("testanim2"));
+            var sheet = Content.Load<Texture2D>("testsh");
+            for(int i = 0; i < 27; i++)
+            {
+                testanim.AddFrame(new Sprite(sheet, 74, 86, drawer, DrawLayer.Entities, 74, 86, i));
+            }
+
             testanim.FinalizeAnimation();
         }
 
@@ -62,7 +72,11 @@ namespace RpgGame
             base.Draw(gameTime);
 
             spriteBatch.Begin();
+            // Drawing Sprites or Animations sends them to the Drawer's queue
             testanim.Draw(10, 10);
+
+            // Drawer will draw all queued items on their respective layers
+            drawer.DrawAll(spriteBatch);
             spriteBatch.End();
         }
     }
