@@ -39,7 +39,7 @@ namespace RpgGame.Engine
             Console.WriteLine($"xtiles: {xtiles} ytiles: {ytiles} xtile: {xtile} vertindex: {ytile} " +
                 $"srcx: {xtile * _tileWidth} srcy: {ytile * _tileHeight}");
 
-            this._src = new Rectangle((int)xtile * _tileWidth, (int)ytile, _tileWidth, _tileHeight);
+            this._src = new Rectangle((int)xtile * _tileWidth, (int)ytile * tileheight, _tileWidth, _tileHeight);
             this._layer = layer;
         }
 
