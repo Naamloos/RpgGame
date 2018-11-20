@@ -27,25 +27,25 @@ namespace RpgGame.Engine
             switch (key)
             {
                 case PlayerKeys.Up:
-                    return _keyPress(Keys.Up) && _btnPress(Buttons.DPadUp);
+                    return _keyPress(Keys.Up) || _btnPress(Buttons.DPadUp);
 
                 case PlayerKeys.Down:
-                    return _keyPress(Keys.Down) && _btnPress(Buttons.DPadDown);
+                    return _keyPress(Keys.Down) || _btnPress(Buttons.DPadDown);
 
                 case PlayerKeys.Left:
-                    return _keyPress(Keys.Left) && _btnPress(Buttons.DPadLeft);
+                    return _keyPress(Keys.Left) || _btnPress(Buttons.DPadLeft);
 
                 case PlayerKeys.Right:
-                    return _keyPress(Keys.Right) && _btnPress(Buttons.DPadRight);
+                    return _keyPress(Keys.Right) || _btnPress(Buttons.DPadRight);
 
                 case PlayerKeys.Interact:
-                    return _keyPress(Keys.Z) && _btnPress(Buttons.A);
+                    return _keyPress(Keys.Z) || _btnPress(Buttons.A);
 
                 case PlayerKeys.Back:
-                    return _keyPress(Keys.X) && _btnPress(Buttons.B);
+                    return _keyPress(Keys.X) || _btnPress(Buttons.B);
 
                 case PlayerKeys.Pause:
-                    return _keyPress(Keys.C) && _btnPress(Buttons.Start);
+                    return _keyPress(Keys.C) || _btnPress(Buttons.Start);
 
                 default:
                     return false;
@@ -57,25 +57,25 @@ namespace RpgGame.Engine
             switch (key)
             {
                 case PlayerKeys.Up:
-                    return currks.IsKeyDown(Keys.Up) && currgs.IsButtonDown(Buttons.DPadUp);
+                    return currks.IsKeyDown(Keys.Up) || currgs.IsButtonDown(Buttons.DPadUp);
 
                 case PlayerKeys.Down:
-                    return currks.IsKeyDown(Keys.Down) && currgs.IsButtonDown(Buttons.DPadDown);
+                    return currks.IsKeyDown(Keys.Down) || currgs.IsButtonDown(Buttons.DPadDown);
 
                 case PlayerKeys.Left:
-                    return currks.IsKeyDown(Keys.Left) && currgs.IsButtonDown(Buttons.DPadLeft);
+                    return currks.IsKeyDown(Keys.Left) || currgs.IsButtonDown(Buttons.DPadLeft);
 
                 case PlayerKeys.Right:
-                    return currks.IsKeyDown(Keys.Right) && currgs.IsButtonDown(Buttons.DPadRight);
+                    return currks.IsKeyDown(Keys.Right) || currgs.IsButtonDown(Buttons.DPadRight);
 
                 case PlayerKeys.Interact:
-                    return currks.IsKeyDown(Keys.Z) && currgs.IsButtonDown(Buttons.A);
+                    return currks.IsKeyDown(Keys.Z) || currgs.IsButtonDown(Buttons.A);
 
                 case PlayerKeys.Back:
-                    return currks.IsKeyDown(Keys.X) && currgs.IsButtonDown(Buttons.B);
+                    return currks.IsKeyDown(Keys.X) || currgs.IsButtonDown(Buttons.B);
 
                 case PlayerKeys.Pause:
-                    return currks.IsKeyDown(Keys.C) && currgs.IsButtonDown(Buttons.Start);
+                    return currks.IsKeyDown(Keys.C) || currgs.IsButtonDown(Buttons.Start);
 
                 default:
                     return false;
@@ -84,12 +84,12 @@ namespace RpgGame.Engine
 
         private bool _keyPress(Keys key)
         {
-            return currks.IsKeyDown(key) && prevks.IsKeyUp(key);
+            return currks.IsKeyDown(key) || prevks.IsKeyUp(key);
         }
 
         private bool _btnPress(Buttons button)
         {
-            return currgs.IsButtonDown(button) && prevgs.IsButtonUp(button);
+            return currgs.IsButtonDown(button) || prevgs.IsButtonUp(button);
         }
 
         /// <summary>
@@ -101,7 +101,6 @@ namespace RpgGame.Engine
         {
             prevks = currks;
             prevgs = currgs;
-
             currgs = gs;
             currks = ks;
         }

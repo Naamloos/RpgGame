@@ -48,10 +48,13 @@
     <Compile Include="Engine\Animation.cs" />
     <Compile Include="Engine\Drawer.cs" />
     <Compile Include="Engine\DrawLayer.cs" />
-    <Compile Include="Engine\IDrawable.cs" />
+    <Compile Include="Engine\IDrawableItem.cs" />
     <Compile Include="Engine\IGameScreen.cs" />
+    <Compile Include="Engine\InputManager.cs" />
     <Compile Include="Engine\Sprite.cs" />
     <Compile Include="Exceptions\AnimationFinalizedException.cs" />
+    <Compile Include="GameData\Entities\Player.cs" />
+    <Compile Include="GameData\BaseEntity.cs" />
     <Compile Include="GameData\MapManager.cs" />
     <Compile Include="GameData\Screens\Overworld.cs" />
     <Compile Include="GameData\TileManager.cs" />

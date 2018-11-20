@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RpgGame.Engine
 {
-    public interface IDrawable
+    public interface IDrawableItem
     {
         void Draw(int x, int y);
         void Update();

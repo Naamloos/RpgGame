@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace RpgGame.Engine
 {
-    public class Animation : IDrawable
+    public class Animation : IDrawableItem
     {
         List<Sprite> _frames;
         TimeSpan _duration;
