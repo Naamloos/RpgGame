@@ -20,10 +20,10 @@ namespace RpgGame
     public class RpgGame : Game
     {
         GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
+        SpriteBatch spritebatch;
         ModManager mods;
-        Animation testanim;
         Drawer drawer;
+        InputManager input;
 
         public RpgGame()
         {
@@ -39,18 +39,10 @@ namespace RpgGame
 
         protected override void LoadContent()
         {
-            spriteBatch = new SpriteBatch(GraphicsDevice);
-            drawer = new Drawer(spriteBatch);
+            spritebatch = new SpriteBatch(GraphicsDevice);
+            drawer = new Drawer(spritebatch);
+            input = new InputManager();
             mods.LoadModAssemblies();
-            testanim = new Animation(74, 86, TimeSpan.FromMilliseconds(1000), drawer, DrawLayer.Entities);
-
-            var sheet = Content.Load<Texture2D>("testsh");
-            for(int i = 0; i < 27; i++)
-            {
-                testanim.AddFrame(new Sprite(sheet, 74, 86, drawer, DrawLayer.Entities, 74, 86, i));
-            }
-
-            testanim.FinalizeAnimation();
         }
 
         protected override void UnloadContent()
@@ -61,9 +53,9 @@ namespace RpgGame
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
-            base.Update(gameTime);
 
-            testanim.Update();
+            input.Update(Keyboard.GetState(), GamePad.GetState(PlayerIndex.One));
+            base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
@@ -71,13 +63,12 @@ namespace RpgGame
             GraphicsDevice.Clear(Color.CornflowerBlue);
             base.Draw(gameTime);
 
-            spriteBatch.Begin();
+            spritebatch.Begin();
             // Drawing Sprites or Animations sends them to the Drawer's queue
-            testanim.Draw(10, 10);
 
             // Drawer will draw all queued items on their respective layers
-            drawer.DrawAll(spriteBatch);
-            spriteBatch.End();
+            drawer.DrawAll(spritebatch);
+            spritebatch.End();
         }
     }
 }

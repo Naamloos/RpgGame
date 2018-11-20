@@ -54,6 +54,7 @@
     <Compile Include="Exceptions\AnimationFinalizedException.cs" />
     <Compile Include="GameData\MapManager.cs" />
     <Compile Include="GameData\Screens\Overworld.cs" />
+    <Compile Include="GameData\TileManager.cs" />
     <Compile Include="Modding\Mod.cs" />
     <Compile Include="Modding\ModManager.cs" />
     <Compile Include="RpgGame.cs" />
